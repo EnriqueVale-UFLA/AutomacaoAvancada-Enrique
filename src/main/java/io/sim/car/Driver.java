@@ -68,7 +68,7 @@ public class Driver extends Thread{
 
         @Override
         public void run() {
-            System.out.println("Thread started PAYMENT_STATION_" + this.login + " : " + System.nanoTime());       //Novo
+            System.out.println("Thread started PAYMENT_STATION_" + this.login + " : " + System.nanoTime());       //For recociliation
             JsonUtil jsonFile = new JsonUtil();
             Encryption encryption = new Encryption();
 
@@ -83,7 +83,7 @@ public class Driver extends Thread{
                 System.out.println("Error writing JSON with payment to AlphaBank.\nException: " + e);
             }
 
-            System.out.println("Thread ended PAYMENT_STATION_" + this.login + " : " + System.nanoTime());       //Novo
+            System.out.println("Thread ended PAYMENT_STATION_" + this.login + " : " + System.nanoTime());       //For recociliation
         }
     }
 
@@ -105,7 +105,7 @@ public class Driver extends Thread{
 
     @Override
     public void run() {
-        // System.out.println("Thread started " + this.ID + " : " + System.nanoTime());      //Part 2
+        System.out.println("Thread started " + this.ID + " : " + System.nanoTime());      //For reconciliation
         this.routes_ready = car.retrieveRoutes();
 
         try {
@@ -117,7 +117,7 @@ public class Driver extends Thread{
         }
 
         //For testing with data reconciliation and Escalation:
-        while (this.executed_routes.size() < 1) {                                          //Part 2
+        while (this.executed_routes.size() < 1) {                                          //For reconciliation
         // while (this.executed_routes.size() < 9) {
             try {
                 Thread.sleep(500);
@@ -132,7 +132,7 @@ public class Driver extends Thread{
 
             //Initializes sending of car reports.
             this.car.setRouteEnded(false);
-            // System.out.println("Called Thread CAR" + this.ID + " : " + System.nanoTime());        //Part2
+            System.out.println("Called Thread CAR" + this.ID + " : " + System.nanoTime());        //For reconciliation
             this.car.startThread();
 
             while (!this.car.getRouteEnded()) {
@@ -172,14 +172,14 @@ public class Driver extends Thread{
                 }
 
                 BotPayment botPayment = new BotPayment(this.ID, this.password, liters);
-                // System.out.println("Called Thread PAYMENT_STATION_" + this.ID + " : " + System.nanoTime());   //Part2
+                System.out.println("Called Thread PAYMENT_STATION_" + this.ID + " : " + System.nanoTime());   //For reconciliation
                 botPayment.start();
 
                 FuelStation fuelStation = new FuelStation(car, liters, true);
 
                 int allowed_bomb = FuelStation.tryFilling();
                 
-                // System.out.println("Chamou a Thread ABASTECER" + this.car.getID() + " : " + System.nanoTime());    //Novo
+                System.out.println("Chamou a Thread ABASTECER" + this.car.getID() + " : " + System.nanoTime());    //For recociliation
                 
                 while (allowed_bomb == 0) {
                     Thread.sleep(200);

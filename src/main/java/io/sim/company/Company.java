@@ -79,7 +79,7 @@ public class Company extends Thread {
 
         @Override
         public void run() {
-            // System.out.println("Thread started PAYMENT" + this.login + " : " + System.nanoTime());      //Novo
+            System.out.println("Thread started PAYMENT" + this.login + " : " + System.nanoTime());      //For reconciliation
             JsonUtil jsonUtil = new JsonUtil();
             Encryption encryption = new Encryption();
 
@@ -94,7 +94,7 @@ public class Company extends Thread {
                 System.out.println("Error writing JSON with payment to AlphaBank.\nException: " + e);
             }
 
-            // System.out.println("Ended Thread PAYMENT + this.login + " : " + System.nanoTime());     //Novo
+            System.out.println("Ended Thread PAYMENT" + this.login + " : " + System.nanoTime());     //For reconciliation
         }
     }
 

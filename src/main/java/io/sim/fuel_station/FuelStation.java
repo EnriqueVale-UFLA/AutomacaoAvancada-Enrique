@@ -62,11 +62,11 @@ public class FuelStation implements Runnable{
     @Override
     public void run() {
         try {
-            // System.out.println("Thread started FILLING " + this.filling_car.getID() + " : " + System.nanoTime());     //Novo
+            System.out.println("Thread started FILLING " + this.filling_car.getID() + " : " + System.nanoTime());     //For reconciliation
             System.out.println(this.filling_car.getID() + " filling...");
 
             //Duration of supply.
-            Thread.sleep(120000);
+            Thread.sleep(5000);
 
             filling_car.fillingFuelTank(this.filling_liters);
 
@@ -80,7 +80,7 @@ public class FuelStation implements Runnable{
                 bomb2_occupied = false;
             }
 
-            // System.out.println("Ended Thread FILLING " + this.filling_car.getID() + " : " + System.nanoTime());    //Novo
+            System.out.println("Ended Thread FILLING " + this.filling_car.getID() + " : " + System.nanoTime());    //For reconciliation
         } catch (InterruptedException e) {
             System.out.println("Vehicle fueling failure");
         }

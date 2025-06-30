@@ -75,13 +75,16 @@ public class App {
         //     drivers.get(i).start();
         // }
 
+
+        //----------------------------------- For reconciliation ----------------------------------------
         // For data reconciliation.
         drivers.get(2).start();                                             
 
-        // System.out.println("Got in line DRIVER 1: " + System.nanoTime());     
-        // drivers.get(0).start();                                             
-        // System.out.println("Got in line DRIVER 4: " + System.nanoTime());      
-        // drivers.get(3).start();                                            
+        System.out.println("Got in line DRIVER 1: " + System.nanoTime());     
+        drivers.get(0).start();                                             
+        System.out.println("Got in line DRIVER 4: " + System.nanoTime());      
+        drivers.get(3).start();               
+        //------------------------------------------------------------------------------------------------                          
 
         //Keeping the simulator running inside a Thread
         Thread thread = new Thread(() -> {
@@ -104,18 +107,22 @@ public class App {
         });
 
         thread.start();
+        
+        //----------------------------------- For reconciliation ----------------------------------------
 
         try {           
             drivers.get(2).join();                                                                         
-            // drivers.get(0).join();                                                        
-            // drivers.get(3).join();                                                        
+            drivers.get(0).join();                                                        
+            drivers.get(3).join();                                                        
 
-            // System.out.println("Thread Ended - Thread DRIVER_1" + " : " + System.nanoTime());       
-            // System.out.println("Thread Ended - Thread DRIVER_4" + " : " + System.nanoTime());       
+            System.out.println("Thread Ended - Thread DRIVER_1" + " : " + System.nanoTime());       
+            System.out.println("Thread Ended - Thread DRIVER_4" + " : " + System.nanoTime());       
 
         } catch (InterruptedException e) {                                                                 
             System.out.println("Error when trying Join");                                         
         }                                                                                       
+
+        //----------------------------------------------------------------------------------------------
 
         // try {
         //     for (int i = 0; i < num_drivers; i++) {

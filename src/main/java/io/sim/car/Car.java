@@ -43,20 +43,19 @@ public class Car extends Vehicle implements Runnable{
 
     //Car parameters as object.
     private String ID;
-    private double fuel_tank = 3.01;
-    // private double fuel_tank = 3.01;                
+    private double fuel_tank = 3.01; //For reconciliation            
     private double distance_traveled;
     private boolean route_ended = false;
 
-    //Parameters for Data reconciliationtion.
+    //Parameters for data reconciliationtion.
     private double last_distance;               
     private long last_time = 0;                
-    private double[] y = new double[] {760, 51.05, 24.15, 31.98, 32.54, 31.84, 194.38, 32.32, 27.40,
-                                            153.63, 33.0, 43.83, 26.14, 38.51, 44.76, 64.32, 53.90};                //Part2
+    private double[] y = new double[] {760, 51.05, 24.15, 31.98, 32.54, 31.84, 107.47, 32.32, 27.40,
+                                            153.63, 33.0, 43.83, 26.14, 38.51, 44.76, 64.32, 53.90};                //For reconciliation
     private double[] v = new double[] {0.5, 0.5719, 3.0751, 6.5083, 6.8557, 3.0186, 2545.3587, 11.7552, 17.1524,
-                                          23.1312, 1.0435, 9.5197, 1.2204, 4.5040, 2.9270, 25.4682, 34.9596};       //Part2
-    private double[][] A = new double[][] {{1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};    //Part2
-    double speed = 0;                           //Part2
+                                          23.1312, 1.0435, 9.5197, 1.2204, 4.5040, 2.9270, 25.4682, 34.9596};       //For reconciliation
+    private double[][] A = new double[][] {{1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};    //For reconciliation
+    double speed = 0;                           //For reconciliation
 
     //Object of the Thread to be executed (due to the implements used)
     private Thread thread = new Thread(this);
@@ -85,8 +84,8 @@ public class Car extends Vehicle implements Runnable{
         this.color = genColor();
         this.fuel_type = fuel();
 
-        this.distance_traveled = 0;                  
-        this.last_distance = 0;                        
+        this.distance_traveled = 0; //For reconciliation             
+        this.last_distance = 0; //For reconciliation                        
 
         connect();
     }
@@ -206,8 +205,8 @@ public class Car extends Vehicle implements Runnable{
      * in addition to fuel verification
      */
     @Override
-    public void run() {
-        // System.out.println("Execution started" + this.ID + " : " + System.nanoTime());        
+    public void run() {                                           
+        System.out.println("Execution started" + this.ID + " : " + System.nanoTime()); //For reconciliation       
         try {
             boolean is_stopped = false;
             boolean flag = true, cars_loaded = false;
@@ -267,7 +266,7 @@ public class Car extends Vehicle implements Runnable{
         }
 
         route_ended = true;
-        // System.out.println("End of Thread " + this.ID + " : " + System.nanoTime()); 
+        System.out.println("End of Thread " + this.ID + " : " + System.nanoTime()); //For reconciliation
     }
 
 
@@ -301,16 +300,16 @@ public class Car extends Vehicle implements Runnable{
                 distance_traveled = distanceCalculator(dist);
             }
 
-            long time = System.nanoTime();                                 //Part2
+            long time = System.nanoTime();                                 //For reconciliation
 
-            if (distance_traveled - last_distance >= 1) {                //Part2
-                last_distance = distance_traveled;                       //Part2
-                sumo.do_job_set(Vehicle.setSpeed(ID, reconciliation(time)));     //Part2
-            }                                                               //Part2
+            if (distance_traveled - last_distance >= 1) {                //For reconciliation
+                last_distance = distance_traveled;                       //For reconciliation
+                sumo.do_job_set(Vehicle.setSpeed(ID, reconciliation(time)));     //For reconciliation
+            }                                                               //For reconciliation
 
-            if (speed != 0) {                                               //Part2
-                sumo.do_job_set(Vehicle.setSpeed(ID, speed));                 //Part2
-            }                                                               //Part2
+            if (speed != 0) {                                               //For reconciliation
+                sumo.do_job_set(Vehicle.setSpeed(ID, speed));                 //For reconciliation
+            }                                                               //For reconciliation
 
             jsonFile.writeReport(this.ID, 
                                         (String) sumo.do_job_get(Vehicle.getRouteID(ID)),
@@ -473,7 +472,7 @@ public class Car extends Vehicle implements Runnable{
         this.fuel_tank += fuel_tank;
     }
 
-    //----------------------------------- Part2 ----------------------------------------
+    //----------------------------------- For reconciliation ----------------------------------------
 
     /**
      * Performs data reconciliation based on the 1km stretch traveled.
@@ -489,11 +488,14 @@ public class Car extends Vehicle implements Runnable{
 
         Reconciliation rec = new Reconciliation(y, v, A);
         double[] res = rec.getReconciledFlow();
-
-        // System.out.println("current time: " + time/1000000000.00);
-        // System.out.println("previous time: " + last_time/1000000000.00);
-        // System.out.println("resulting time: " + res[0] + " " + res[1]);
+        
+        System.out.println("-----------------------------------------------");
+        System.out.println("About: " + this.ID);
+        System.out.println("current time: " + time/1000000000.00);
+        System.out.println("previous time: " + last_time/1000000000.00);
+        System.out.println("resulting time: " + res[0] + " " + res[1]);
         System.out.println("Suggested speed: " + 1000/res[1]);
+        System.out.println("-----------------------------------------------");
 
         y = res;
 

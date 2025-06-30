@@ -1,3 +1,8 @@
+/**
+* Code transferred from previous work in the Advanced Automation course.
+* Credit to all who contributed to the construction of this script
+ */
+
 package io.sim.utils;
 
 import org.ejml.data.DMatrixRMaj;

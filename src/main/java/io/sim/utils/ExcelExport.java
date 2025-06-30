@@ -26,12 +26,12 @@ public class ExcelExport extends Thread{
     private static XSSFWorkbook workbook;
     private static XSSFSheet data_folder;
     private static XSSFSheet extracts_folder;
-    private static XSSFSheet reconciliation_folder;                                   //Part2
+    private static XSSFSheet reconciliation_folder;                                   //For reconciliation
 
     //Storage of data from the Company and Account classes (using Excel)
     private static ArrayList<ArrayList<String>> data_set;
     private static ArrayList<ArrayList<String>> extracts_set;
-    private static ArrayList<ArrayList<String>> reconciliation_set;             //Part2
+    private static ArrayList<ArrayList<String>> reconciliation_set;             //For reconciliation
 
     //Operation flag.
     private static boolean flag = true;
@@ -56,9 +56,9 @@ public class ExcelExport extends Thread{
                 writeCellsExtract();
             }
 
-            if (!reconciliation_set.isEmpty()) {       //Part2
-                writeCellsReconciliation();              //Part2
-            }                                       //Part2
+            if (!reconciliation_set.isEmpty()) {       //For reconciliation
+                writeCellsReconciliation();              //For reconciliation
+            }                                       //For reconciliation
 
             try {
                 Thread.sleep(1000);
@@ -109,7 +109,7 @@ public class ExcelExport extends Thread{
     }
 
     /**
-     * Part2!
+     * For reconciliation!
      * Writes the cells of the extract using the data obtained in a given time interval 
      * (defined by the Thread.sleep of the run method).
      */
@@ -130,7 +130,7 @@ public class ExcelExport extends Thread{
     }
 
     /**
-     * Part2!
+     * For reconciliation!
      * Writes the data related to the report in the {@link ExcelExport#data_set} attribute.
      * @param arrayList {@link ArrayList} containing the data to be inserted.
      */
@@ -227,7 +227,7 @@ public class ExcelExport extends Thread{
     }
 
     /**
-     * Part2!
+     * For reconciliation!
      * Creates the Date Reconciliation header, containing the items:
      * Time Remaining // Section 02 // Section 03 // Section 04 // Section 05 // Section 06 // Section 07 // Section 08 // (...)
      */
@@ -256,17 +256,17 @@ public class ExcelExport extends Thread{
     public static void main(String[] args) {
         data_set = new ArrayList<>();
         extracts_set = new ArrayList<>();
-        reconciliation_set = new ArrayList<>();     //Part2
+        reconciliation_set = new ArrayList<>();     //For reconciliation
 
         workbook = new XSSFWorkbook();
 
         data_folder = workbook.createSheet("Report");
         extracts_folder = workbook.createSheet("Extracts");
-        reconciliation_folder = workbook.createSheet("Reconciliation");        //Part2
+        reconciliation_folder = workbook.createSheet("Reconciliation");        //For reconciliation
 
         createHeaderReport();
         criarheaderExtrato();
-        createHeaderReconciliation();          //Part2
+        createHeaderReconciliation();          //For reconciliation
 
         Thread thread = new Thread(() -> {
             boolean flag1 = true;
@@ -285,7 +285,7 @@ public class ExcelExport extends Thread{
                         
                         data_folder = workbook.getSheet("Report");
                         extracts_folder = workbook.getSheet("Extracts");
-                        reconciliation_folder = workbook.getSheet("Reconciliation");       //Part2
+                        reconciliation_folder = workbook.getSheet("Reconciliation");       //For reconciliation
                         
                     } catch (IOException e) {
                         System.out.println("Error writing file.\nException: " + e);
